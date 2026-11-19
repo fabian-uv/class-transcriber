@@ -877,6 +877,12 @@ button {
 }
 
 
+.github-link {
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+}
+
 .github-link:hover {
   color:
     var(--green);
