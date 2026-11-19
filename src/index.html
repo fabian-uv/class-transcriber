@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>Class Transcriber</title>
+
+  <link
+    rel="stylesheet"
+    href="./styles.css"
+  />
+</head>
+
+<body>
+  <main class="app-shell">
+
+    <header class="topbar">
+
+<div class="brand">
+
+  <img
+    class="brand-logo"
+    src="./assets/logo.png"
+    alt="Class Transcriber"
+  />
+
+  <p id="subtitle">
+    Local audio and video transcription
+  </p>
+
+</div>
+
+      <div class="language-switch">
+        <button
+          class="language-button active"
+          data-lang="en"
+        >
+          EN
+        </button>
+
+        <button
+          class="language-button"
+          data-lang="es"
+        >
+          ES
+        </button>
+      </div>
+
+    </header>
+
+    <section id="optionsBar" class="options-bar">
+      <div class="option-row">
+        <div class="folder-picker-wrap">
+          <span class="option-icon">📁</span>
+          <span id="outputFolderLabel" class="option-label">Output folder:</span>
+          <span id="outputFolderDisplay" class="option-path" title="Same as source video">Same as source</span>
+          <button id="changeFolderButton" class="secondary-button xs-btn">Change</button>
+          <button id="resetFolderButton" class="icon-btn xs-icon hidden" title="Reset to default">✕</button>
+        </div>
+
+        <label class="checkbox-label" id="mergeLabelWrap">
+          <input type="checkbox" id="mergeCheckbox" />
+          <span id="mergeCheckboxText">Merge all into one .txt</span>
+        </label>
+      </div>
+    </section>
+
+    <section
+      id="dropZone"
+      class="drop-zone"
+    >
+
+      <div class="upload-icon">
+        <svg
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path d="M12 16V4"></path>
+          <path d="M7.5 8.5 12 4l4.5 4.5"></path>
+          <path d="M5 14v3.5A2.5 2.5 0 0 0 7.5 20h9a2.5 2.5 0 0 0 2.5-2.5V14"></path>
+        </svg>
+      </div>
+
+      <h2 id="dropTitle">
+        Drop audio or video files here
+      </h2>
+
+      <p id="dropDescription">
+        or choose multiple files from your computer
+      </p>
+
+      <button
+        id="selectButton"
+        class="primary-button"
+      >
+        Select files
+      </button>
+
+    </section>
+
+    <section
+      id="queueSection"
+      class="queue-section hidden"
+    >
+      <div class="queue-header">
+        <div class="queue-title-wrap">
+          <h3 id="queueTitle">Transcription Queue</h3>
+          <span id="queueBadge" class="queue-badge">0 files</span>
+        </div>
+        <div class="queue-controls">
+          <button id="addFilesButton" class="secondary-button sm-btn">
+            + Add files
+          </button>
+          <button id="clearCompletedButton" class="secondary-button sm-btn hidden">
+            Clear completed
+          </button>
+          <button id="clearAllButton" class="secondary-button sm-btn">
+            Clear all
+          </button>
+        </div>
+      </div>
+
+      <div id="queueList" class="queue-list">
+        <!-- Queue items will be rendered dynamically -->
+      </div>
+    </section>
+
+    <section
+      id="progressSection"
+      class="progress-card hidden"
+    >
+
+      <div class="progress-header">
+        <span id="statusText">
+          Preparing...
+        </span>
+
+        <span id="progressValue">
+          0%
+        </span>
+      </div>
+
+      <div class="progress-track">
+        <div
+          id="progressBar"
+          class="progress-bar"
+        ></div>
+      </div>
+
+    </section>
+
+    <section class="actions">
+
+      <button
+        id="startQueueButton"
+        class="primary-button hidden"
+      >
+        Transcribe all
+      </button>
+
+      <button
+        id="mergeNowButton"
+        class="secondary-button hidden"
+      >
+        Merge into 1 TXT
+      </button>
+
+      <button
+        id="stopQueueButton"
+        class="secondary-button danger-button hidden"
+      >
+        Stop queue
+      </button>
+
+      <button
+        id="showButton"
+        class="secondary-button hidden"
+      >
+        Show in folder
+      </button>
+
+      <button
+        id="showMergedButton"
+        class="secondary-button success-button hidden"
+      >
+        Show merged TXT
+      </button>
+
+    </section>
+
+    <footer class="footer">
+
+      <span id="privacyText">
+        Your files stay on your device.
+      </span>
+
+   <a
+  class="github-link"
+  href="https://github.com/fabianubv/class-transcriber"
+  target="_blank"
+  rel="noopener noreferrer"
+  title="Class Transcriber on GitHub"
+>
+  fabianubv
+</a>
+
+    </footer>
+
+  </main>
+
+  <script
+    type="module"
+    src="./main.js"
+  ></script>
+</body>
+</html>
