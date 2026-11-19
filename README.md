@@ -5,48 +5,39 @@
 ![whisper.cpp](https://img.shields.io/badge/whisper.cpp-local-00b981)
 ![Status](https://img.shields.io/badge/status-active%20development-00b981)
 
-A lightweight desktop application for transcribing audio and video files locally using [whisper.cpp](https://github.com/ggml-org/whisper.cpp).
-
-All media processing is performed offline on your device. No cloud services, accounts, or subscriptions are required.
+A macOS desktop app that transcribes audio and video files on your own computer with [whisper.cpp](https://github.com/ggml-org/whisper.cpp). Nothing is sent to a cloud service, and you don't need an account or a subscription.
 
 ![Class Transcriber](docs/screenshot.png)
 
-## Overview
-
-Class Transcriber provides an efficient, privacy-first interface to transcribe recordings, lectures, and media files without sending data to third-party APIs. It wraps `whisper.cpp` and `ffmpeg` into a native desktop workflow built with Tauri.
+It wraps `whisper.cpp` and `ffmpeg` in a native app built with Tauri, so you can transcribe lectures and other recordings without sending them to a third-party API.
 
 ## Features
 
-- **Batch Processing Queue**: Select multiple media files at once or drop an entire batch. Files are queued and processed sequentially with individual progress tracking.
-- **Transcript Merging**: Combine all processed transcriptions into a single consolidated text file with standardized delimiters and section titles, available automatically on completion or on demand.
-- **Custom Output Directory**: Save generated transcripts directly alongside source media or define a dedicated output destination folder.
-- **Local and Private**: All audio extraction and speech recognition run entirely on local hardware. Media files never leave your system.
-- **Flexible Model Discovery**: Automatically locates GGML models in `~/whisper-models/` (supporting `ggml-medium.bin`, large, small, base, tiny, or custom model files) and standard system paths.
-- **Bilingual Interface**: Native support for English and Spanish.
-- **Broad Media Format Support**: Handles common video and audio containers without manual pre-conversion.
+- Queue several files at once, by selecting them or dropping them in. They are processed one after another, each with its own progress bar.
+- Merge all the transcripts into a single text file, with delimiters and a title for each section. The merged file is offered when the queue finishes, or whenever you ask for it.
+- Save transcripts next to the source files or in a folder you choose.
+- Models are found automatically in `~/whisper-models/` and the standard system paths. It works with `ggml-medium.bin`, the large, small, base and tiny models, or a custom model file.
+- The interface is in English and Spanish.
+- Common video and audio formats work without converting them first.
 
-## Supported Formats
+## Supported formats
 
-### Video
-- MP4, MOV, M4V, MKV, WebM, AVI
-
-### Audio
-- MP3, WAV, M4A, AAC, FLAC, OGG
+- Video: MP4, MOV, M4V, MKV, WebM, AVI
+- Audio: MP3, WAV, M4A, AAC, FLAC, OGG
 
 ## Requirements
 
 The current macOS build relies on local system binaries:
 
-1. **FFmpeg** (audio extraction and sampling):
+1. FFmpeg, to extract and resample the audio:
    ```bash
    brew install ffmpeg
    ```
-2. **whisper.cpp** CLI (`whisper-cli`):
+2. The whisper.cpp CLI (`whisper-cli`):
    ```bash
    brew install whisper-cpp
    ```
-3. **Whisper GGML Model**:
-   Place compatible GGML model files in `~/whisper-models/` (for example, `ggml-medium.bin` or `ggml-large-v3-turbo.bin`):
+3. A Whisper GGML model. Put the model files in `~/whisper-models/` (for example, `ggml-medium.bin` or `ggml-large-v3-turbo.bin`):
    ```bash
    mkdir -p ~/whisper-models
    curl -L -o ~/whisper-models/ggml-medium.bin https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-medium.bin
@@ -54,7 +45,7 @@ The current macOS build relies on local system binaries:
 
 ## Installation on macOS
 
-### From Source
+### From source
 
 Clone the repository and run the installation script:
 
@@ -66,7 +57,7 @@ cd class-transcriber
 
 This compiles the release binary and installs `Class Transcriber.app` into `/Applications`.
 
-### Building a Disk Image (DMG)
+### Building a disk image
 
 To package a standalone `.dmg` installer:
 
@@ -74,7 +65,7 @@ To package a standalone `.dmg` installer:
 ./build-dmg.sh
 ```
 
-The resulting `Class-Transcriber.dmg` will be created in the project root directory.
+The script writes `Class-Transcriber.dmg` to the project root.
 
 ## Development
 
@@ -101,18 +92,18 @@ To build a standalone release without installing:
 npx tauri build
 ```
 
-## Privacy Policy
+## Privacy
 
-Class Transcriber processes all media exclusively on your local machine.
+Class Transcriber processes all media on your machine.
 
-- No telemetry or analytics collection.
+- No telemetry or analytics.
 - No network requests during transcription.
 - No transmission of user audio, video, transcripts, or directory metadata.
 
-## Platform Support
+## Platform support
 
-- macOS: Fully supported and tested (Apple Silicon & Intel).
-- Windows & Linux: Planned.
+- macOS: supported and tested on Apple Silicon and Intel.
+- Windows and Linux: planned.
 
 ## License
 
