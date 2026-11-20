@@ -245,6 +245,15 @@ function addFilesToQueue(paths) {
   }
 }
 
+// Creates an element with plain properties (className, title, textContent...)
+// and optional children. Never parses HTML.
+function el(tag, props = {}, children = []) {
+  const node = document.createElement(tag);
+  Object.assign(node, props);
+  node.append(...children);
+  return node;
+}
+
 function renderQueue() {
   const tr = t();
   const total = queue.length;
@@ -317,7 +326,7 @@ function renderQueue() {
   }
 
   // Render list items
-  queueList.innerHTML = "";
+  queueList.replaceChildren();
   queue.forEach((item, index) => {
     const itemEl = document.createElement("div");
     const isInProgress = item.status === "extracting" || item.status === "transcribing";
@@ -345,42 +354,59 @@ function renderQueue() {
       subtitleText = item.error ? item.error : tr.stages.error;
     }
 
-    itemEl.innerHTML = `
-      <div class="queue-item-icon">${iconText}</div>
-      <div class="queue-item-copy">
-        <span class="queue-item-name" title="${item.path}">${index + 1}. ${item.name}</span>
-        <span class="queue-item-subtitle" title="${subtitleText}">${subtitleText}</span>
-      </div>
-      <span class="queue-item-badge">${statusLabel}</span>
-      <div class="queue-item-actions">
-        ${
-          item.status === "done" && item.outputPath
-            ? `<button class="icon-btn btn-folder" data-id="${item.id}" title="${tr.show}">📁</button>`
-            : ""
-        }
-        ${
-          !isInProgress && !isProcessing
-            ? `<button class="icon-btn btn-remove" data-id="${item.id}" title="Remove">✕</button>`
-            : ""
-        }
-      </div>
-    `;
+    // Built with textContent/title, never innerHTML: file names, paths and
+    // FFmpeg/whisper error messages come from outside and may contain markup.
+    const copyEl = el("div", { className: "queue-item-copy" }, [
+      el("span", {
+        className: "queue-item-name",
+        title: item.path,
+        textContent: `${index + 1}. ${item.name}`,
+      }),
+      el("span", {
+        className: "queue-item-subtitle",
+        title: subtitleText,
+        textContent: subtitleText,
+      }),
+    ]);
 
-    const folderBtn = itemEl.querySelector(".btn-folder");
-    if (folderBtn) {
+    const actionsEl = el("div", { className: "queue-item-actions" });
+
+    if (item.status === "done" && item.outputPath) {
+      const folderBtn = el("button", {
+        className: "icon-btn btn-folder",
+        title: tr.show,
+        textContent: "📁",
+      });
+      folderBtn.type = "button";
+      folderBtn.dataset.id = item.id;
       folderBtn.addEventListener("click", (e) => {
         e.stopPropagation();
         openFolderForPath(item.outputPath);
       });
+      actionsEl.append(folderBtn);
     }
 
-    const removeBtn = itemEl.querySelector(".btn-remove");
-    if (removeBtn) {
+    if (!isInProgress && !isProcessing) {
+      const removeBtn = el("button", {
+        className: "icon-btn btn-remove",
+        title: "Remove",
+        textContent: "✕",
+      });
+      removeBtn.type = "button";
+      removeBtn.dataset.id = item.id;
       removeBtn.addEventListener("click", (e) => {
         e.stopPropagation();
         removeQueueItem(item.id);
       });
+      actionsEl.append(removeBtn);
     }
+
+    itemEl.append(
+      el("div", { className: "queue-item-icon", textContent: iconText }),
+      copyEl,
+      el("span", { className: "queue-item-badge", textContent: statusLabel }),
+      actionsEl
+    );
 
     queueList.appendChild(itemEl);
   });
