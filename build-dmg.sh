@@ -12,6 +12,10 @@ echo "==> Generando instalador DMG para Class Transcriber..."
 if [ ! -d "$APP_SRC" ]; then
   echo "Compilando la aplicación primero..."
   cd "$DIR"
+  if [ ! -x ./node_modules/.bin/tauri ]; then
+    echo "==> Instalando dependencias de npm (npm ci)..."
+    npm ci
+  fi
   ./node_modules/.bin/tauri build
 fi
 

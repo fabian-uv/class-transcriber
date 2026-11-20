@@ -47,7 +47,7 @@ The current macOS build relies on local system binaries:
 
 ### From source
 
-Clone the repository and run the installation script:
+You need Node.js (v18+), Rust and the Xcode Command Line Tools. Clone the repository and run the installation script:
 
 ```bash
 git clone https://github.com/fabianubv/class-transcriber.git
@@ -55,7 +55,7 @@ cd class-transcriber
 ./install.sh
 ```
 
-This compiles the release binary and installs `Class Transcriber.app` into `/Applications`.
+The script installs the npm dependencies if they are missing, compiles the release binary and installs `Class Transcriber.app` into `/Applications`.
 
 ### Building a disk image
 
